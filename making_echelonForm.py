@@ -2,16 +2,25 @@
 #author Saifullah
 #october 06,2023
 #venue Home Sweet Home
+"""
+There are basically four steps in creating a row echelon matrix
+Step 1: Finding pivot entry index of rows
+Step 2: Arranging them according to their index
+Step 3: Make leading entry 1
+Step 4: making 0 below if there is any nonzero entry  
+"""
 import numpy as np#for working with arrays
 
-def get_index(a,row):#for getting pivot index
+# function for getting pivot entry index
+def get_index(a,row):
     for i in range (len(a)):
         if a[i]!=0:
             return i
     return i+row#in case of zero row
 
 
-def arranging(A):#for arranging matrix according to pivot index
+#function for arranging matrix according to pivot index
+def arranging(A):
     r=A.shape[0] #counting rows
     for i in range(r):
          current_row=0
@@ -27,7 +36,8 @@ def arranging(A):#for arranging matrix according to pivot index
     return A #returning matrix after arranging
 
 
-def makingOne(arr,row):#for making leading entry 1
+#for making leading entry 1
+def makingOne(arr,row):
     A=arr[row, :]#row whose leading entry is make to be 1
     colum=len(A)#counting total colum or total entries in a row
     for x in range(colum):
@@ -38,7 +48,8 @@ def makingOne(arr,row):#for making leading entry 1
             return arr #returning matrix      
     return arr#returning orignal matrix in case of zero row     
 
-def making_0(arr,current_row):#for making 0 in next row
+#for making 0 in next row below 1 
+def making_0(arr,current_row):
     r=arr.shape[0]
     c=arr.shape[1]
     for x in range(current_row+1,r,1):
@@ -50,8 +61,10 @@ def making_0(arr,current_row):#for making 0 in next row
                  arr[x,j]=arr[x,j]-arr[current_row,j]*arr[x,index2]#subtracting next row with multiple of their leading entry 
                  
     return arr
-       
-def making_ref(arr):#sum of total oprations that to be perform on matrix
+
+
+#sum of total oprations that to be perform on matrix       
+def making_ref(arr):
     r=arr.shape[0]
     for x in range(r-1):
         arr=arranging(arr)
@@ -61,7 +74,7 @@ def making_ref(arr):#sum of total oprations that to be perform on matrix
     print(arr)
     
 
-arr=np.array([[0,0,0,0],[0,0,0,4]], dtype=float )
+arr=np.array([[0,0,3,4],[3,0,0,4]], dtype='f')
 making_ref(arr)
               
 
