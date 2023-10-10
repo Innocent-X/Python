@@ -80,3 +80,4 @@ arr=np.array([[2, 4, 6],
 arr=making_ref(arr)
 print(arr)              
 
+#if you find error feel comfortable to tell me i will be very glad
