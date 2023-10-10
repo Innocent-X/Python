@@ -20,11 +20,11 @@ def get_index(a,row):
 
 
 #function for arranging matrix according to pivot index
-def arranging(A):
+def arranging(A,row):
     r=A.shape[0] #counting rows
     for i in range(r):
-         current_row=0
-         for next_row in range(1,r,1):
+         current_row=row
+         for next_row in range(row+1,r,1):
                 index1=get_index(A[current_row, :],current_row)#getting index of current row
                 index2=get_index(A[next_row, :],next_row)#getting index of next
                 if index1>index2:#replacing if pivot of first is on right
@@ -67,14 +67,16 @@ def making_0(arr,current_row):
 def making_ref(arr):
     r=arr.shape[0]
     for x in range(r-1):
-        arr=arranging(arr)
+        arr=arranging(arr,x)
         arr=makingOne(arr,x)
         arr=making_0(arr,x)
     arr=makingOne(arr,r-1)           
     print(arr)
     
 
-arr=np.array([[0,0,3,4],[3,0,0,4]], dtype='f')
-making_ref(arr)
-              
+arr=np.array([[2, 4, 6],
+                [0, 0, 3],
+                [0, 0, 0]], dtype='f')
+arr=making_ref(arr)
+print(arr)              
 
