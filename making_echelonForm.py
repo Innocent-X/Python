@@ -22,11 +22,11 @@ def get_index(a,row):
 #function for arranging matrix according to pivot index
 def arranging(A,row):
     r=A.shape[0] #counting rows
-    for i in range(r):
+    for i in range(r-row):
          current_row=row
-         for next_row in range(row+1,r,1):
-                index1=get_index(A[current_row, :],current_row)#getting index of current row
-                index2=get_index(A[next_row, :],next_row)#getting index of next
+         for next_row in range(row+1,r-row,1):
+                index1=get_index(A[current_row,],current_row)#getting index of current row
+                index2=get_index(A[next_row,],next_row)#getting index of next row
                 if index1>index2:#replacing if pivot of first is on right
                   replacing=np.copy(A[current_row])
                   A[current_row]=A[next_row]
@@ -38,14 +38,13 @@ def arranging(A,row):
 
 #for making leading entry 1
 def makingOne(arr,row):
-    A=arr[row, :]#row whose leading entry is make to be 1
-    colum=len(A)#counting total colum or total entries in a row
+    A=arr[row,]#row whose leading entry is make to be 1
+    colum=len(A)#counting total colum 
     for x in range(colum):
-        if A[x]!=0:#making non zero entry 1
-            for i in range(colum-1,x-1,-1):#dividing whole row with leading non zero entry
-                A[i]=A[i]/A[x]
-                arr[ row, : ]=A#changing row in matrix
-            return arr #returning matrix      
+        if A[x]!=0:    #finding non zero entry 
+            A=A/A[x]      #making leading entry 1 by dividing whole row by it
+            arr[row,]=A   #replacing row in real matrix
+            return arr  #returning matrix      
     return arr#returning orignal matrix in case of zero row     
 
 #for making 0 in next row below 1 
@@ -53,19 +52,19 @@ def making_0(arr,current_row):
     r=arr.shape[0]
     c=arr.shape[1]
     for x in range(current_row+1,r,1):
-         index1=get_index(arr[current_row,  :],current_row)
-         index2=get_index(arr[ x,  :],x)
+         index1=get_index(arr[current_row,],current_row)
+         index2=get_index(arr[x,],x)
          if index1==index2:# if there is a non zero entry below one
-             for j in range(c-1,-1,-1):#iterating in reverse because the leading entry reamin same till end
-                 
-                 arr[x,j]=arr[x,j]-arr[current_row,j]*arr[x,index2]#subtracting next row with multiple of their leading entry 
-                 
+            arr[x,]=arr[x,]-arr[current_row,]*arr[x,index2]
     return arr
 
 
 #sum of total oprations that to be perform on matrix       
 def making_ref(arr):
     r=arr.shape[0]
+    if r==0 or r==1: #for null and row marix
+        return arr
+    
     for x in range(r-1):
         arr=arranging(arr,x)
         arr=makingOne(arr,x)
@@ -74,10 +73,11 @@ def making_ref(arr):
     print(arr)
     
 
-arr=np.array([[2, 4, 6],
-                [0, 0, 3],
-                [0, 0, 0]], dtype='f')
+arr=np.array([[0,0,4],[0,0,0],[1,2,3],[2,4,5]], dtype='f')
+
 arr=making_ref(arr)
-print(arr)              
+             
+
+         
 
 #if you find error feel comfortable to tell me i will be very glad
