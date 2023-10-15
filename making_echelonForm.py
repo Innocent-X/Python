@@ -22,17 +22,15 @@ def get_index(a,row):
 #function for arranging matrix according to pivot index
 def arranging(A,row):
     r=A.shape[0] #counting rows
-    for i in range(r-row):
-         current_row=row
-         for next_row in range(row+1,r-row,1):
-                index1=get_index(A[current_row,],current_row)#getting index of current row
-                index2=get_index(A[next_row,],next_row)#getting index of next row
-                if index1>index2:#replacing if pivot of first is on right
+    current_row=row
+    for next_row in range(row+1,r,1):
+        index1=get_index(A[current_row,],current_row)#getting index of current row
+        index2=get_index(A[next_row,],next_row)#getting index of next row
+        if index1>index2:#replacing if pivot of first is on right
                   replacing=np.copy(A[current_row])
                   A[current_row]=A[next_row]
                   A[next_row]=replacing
-                  current_row=next_row#when row is replace its number is change
-    
+                  
     return A #returning matrix after arranging
 
 
@@ -50,12 +48,11 @@ def makingOne(arr,row):
 #for making 0 in next row below 1 
 def making_0(arr,current_row):
     r=arr.shape[0]
-    c=arr.shape[1]
     for x in range(current_row+1,r,1):
          index1=get_index(arr[current_row,],current_row)
          index2=get_index(arr[x,],x)
          if index1==index2:# if there is a non zero entry below one
-            arr[x,]=arr[x,]-arr[current_row,]*arr[x,index2]
+            arr[x,]=arr[x,]-arr[current_row,]*arr[x,index2] 
     return arr
 
 
@@ -70,14 +67,13 @@ def making_ref(arr):
         arr=makingOne(arr,x)
         arr=making_0(arr,x)
     arr=makingOne(arr,r-1)           
-    print(arr)
+    return arr
     
 
-arr=np.array([[0,0,4],[0,0,0],[1,2,3],[2,4,5]], dtype='f')
+arr=np.array([[0,0,0],[0,2,6],[8,0,0]], dtype='f')
 
 arr=making_ref(arr)
-             
+print(arr)
 
-         
+#if you find any error feel comfortable to tell             
 
-#if you find error feel comfortable to tell me i will be very glad
