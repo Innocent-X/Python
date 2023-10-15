@@ -16,7 +16,7 @@ def get_index(a,row):
     for i in range (len(a)):
         if a[i]!=0:
             return i
-    return i+row#in case of zero row
+    return i+row+1#in case of zero row
 
 
 #function for arranging matrix according to pivot index
@@ -62,11 +62,10 @@ def making_ref(arr):
     if r==0 or r==1: #for null and row marix
         return arr
     
-    for x in range(r-1):
+    for x in range(r):
         arr=arranging(arr,x)
         arr=makingOne(arr,x)
         arr=making_0(arr,x)
-    arr=makingOne(arr,r-1)           
     return arr
     
 
